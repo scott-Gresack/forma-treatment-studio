@@ -23,10 +23,12 @@
   posthogScript.src = 'https://us-assets.i.posthog.com/static/array.js';
   document.head.appendChild(posthogScript);
   window.posthog.init(posthogKey, { api_host: 'https://us.i.posthog.com', person_profiles: 'always', capture_pageview: true });
-  const script = document.createElement('script');
-  script.async = true;
-  script.src = 'https://www.googletagmanager.com/gtag/js?id=' + measurementId;
-  document.head.appendChild(script);
+  if (!document.querySelector('script[src*="googletagmanager.com/gtag/js"]')) {
+    const script = document.createElement('script');
+    script.async = true;
+    script.src = 'https://www.googletagmanager.com/gtag/js?id=' + measurementId;
+    document.head.appendChild(script);
+  }
   window.dataLayer = window.dataLayer || [];
   window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
   gtag('js', new Date());
