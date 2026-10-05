@@ -30,7 +30,7 @@
   window.dataLayer = window.dataLayer || [];
   window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
   gtag('js', new Date());
-  gtag('config', measurementId, { send_page_view: true, page_title: document.title, page_location: location.origin + location.pathname, debug_mode: debug });
+  gtag('config', measurementId, { send_page_view: true, anonymize_ip: true, page_title: document.title, page_path: location.pathname || '/', page_location: location.origin + (location.pathname || '/'), debug_mode: debug });
   window.formaTrack = function (name, params) {
     const safe = Object.assign({ site_name: 'forma_treatment_studio', demo_mode: true }, params || {});
     delete safe.query; delete safe.search_term; delete safe.email; delete safe.name;
