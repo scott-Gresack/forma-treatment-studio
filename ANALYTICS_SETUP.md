@@ -54,6 +54,18 @@ Create these GA4 explorations or dashboard cards:
 4. **Time to next step**: time between `demo_case_start` and `appointment_booked`
 5. **Reconciliation volume**: count and value of `refund_issued`
 
+## 3a. Recommended GA4 audiences
+
+Create these audiences in **Admin → Data display → Audiences** using the event parameters emitted by `analytics.js`:
+
+- **High-value funding explorers**: `funding_interest = active` and `treatment_value_band` is `high_10k_20k` or `high_20k_plus`.
+- **Presented, not scheduled**: `demo_case_start` exists and `appointment_booked` does not exist within 7 days.
+- **Highly engaged coordinators**: `engagement_level = high` and `journey_stage` is `funding` or `follow_up`.
+- **Accepted next step**: `conversion_signal = accepted_next_step`.
+- **Plan-change workflow users**: `journey_stage = reconciled`.
+
+These are aggregate behavioral audiences. They do not contain patient identity or free-text data. Register the parameters as custom dimensions in GA4 if you want them available in standard reports.
+
 The executive story is simple: Forma helps practices move more approved treatment from presentation to scheduled care, while making funding gaps and plan changes visible.
 
 ## 4. Monetization model

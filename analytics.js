@@ -35,6 +35,14 @@
   gtag('config', measurementId, { send_page_view: true, anonymize_ip: true, page_title: document.title, page_path: location.pathname || '/', page_location: location.origin + (location.pathname || '/'), debug_mode: debug });
   window.formaTrack = function (name, params) {
     const safe = Object.assign({ site_name: 'forma_treatment_studio', demo_mode: true }, params || {});
+    const caseBands = { implant: 'high_10k_20k', staged: 'high_20k_plus', aligner: 'mid_5k_10k', partial: 'high_20k_plus', refund: 'high_10k_20k' };
+    const stages = { demo_view: 'viewed', demo_case_start: 'presented', payment_path_selected: 'funding', offer_selected: 'funding', appointment_slot_selected: 'scheduling', appointment_booked: 'scheduled', followup_requested: 'follow_up', refund_issued: 'reconciled', demo_reset: 'reset' };
+    safe.treatment_value_band = safe.case_id ? (caseBands[safe.case_id] || 'unclassified') : (safe.treatment_value_band || 'portfolio');
+    safe.journey_stage = safe.journey_stage || stages[name] || 'engaged';
+    safe.interaction_count = sent.length + 1;
+    safe.engagement_level = safe.interaction_count >= 5 ? 'high' : safe.interaction_count >= 3 ? 'medium' : 'low';
+    if (name === 'payment_path_selected' || name === 'offer_selected') safe.funding_interest = 'active';
+    if (name === 'appointment_booked') safe.conversion_signal = 'accepted_next_step';
     delete safe.query; delete safe.search_term; delete safe.email; delete safe.name;
     sent.push({ name, params: safe, at: new Date().toISOString() });
     window.digitalData.events.push({ event: name, eventData: safe, timestamp: new Date().toISOString() });
