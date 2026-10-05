@@ -32,7 +32,7 @@
   window.dataLayer = window.dataLayer || [];
   window.gtag = window.gtag || function () { window.dataLayer.push(arguments); };
   gtag('js', new Date());
-  gtag('config', measurementId, { send_page_view: true, anonymize_ip: true, page_title: document.title, page_path: location.pathname || '/', page_location: location.origin + (location.pathname || '/'), debug_mode: debug });
+  gtag('config', measurementId, { send_page_view: false, anonymize_ip: true, page_title: document.title, page_path: location.pathname || '/', page_location: location.origin + (location.pathname || '/'), debug_mode: debug });
   window.formaTrack = function (name, params) {
     const safe = Object.assign({ site_name: 'forma_treatment_studio', demo_mode: true }, params || {});
     const caseBands = { implant: 'high_10k_20k', staged: 'high_20k_plus', aligner: 'mid_5k_10k', partial: 'high_20k_plus', refund: 'high_10k_20k' };
@@ -51,5 +51,6 @@
     window.posthog.capture(name, safe);
     gtag('event', name, safe);
   };
+  gtag('event', 'page_view', { page_title: document.title, page_location: location.origin + (location.pathname || '/'), page_path: location.pathname || '/', site_name: 'forma_treatment_studio', demo_mode: true });
   window.formaTrack('demo_view', { view_name: 'treatment_workspace' });
 })();
